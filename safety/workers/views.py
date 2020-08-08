@@ -8,25 +8,35 @@
 # from .models import Worker
 
 # # class-base view
+
+
 # class WorkerListView(View):
-  
+
 #     def get(self, request):
-    
+
 #         workers = Worker.objects.all()
 
-#         # # return sample html   
-#         # html = ''
-#         # for worker in workers:
-#         #     html += f'<li>{worker.first_name}</li>'   
-#         # return HttpResponse(html)
+#         # return sample html
+#         html = ''
+#         for worker in workers:
+#             html += f'<li>{worker.first_name}</li>'
+#         return HttpResponse(html)
 
-#         # # rendor html file and passing context
-#         # worker_list = []
-#         # for worker in workers:
-#         #     worker_list.append(worker.first_name)
-#         # return render(request, 'worker_list.html', {'workers': worker_list})
+#         # rendor html file and passing context
+#         worker_list = []
+#         for worker in workers:
+#             worker_list.append(worker.first_name)
+#         return render(
+#             request,
+#             'worker_list.html',
+#             {'workers': worker_list},
+#         )
 
-#         # return render(request, 'worker_list.html', {'workers': workers})
+#         return render(
+#             request,
+#             'worker_list.html',
+#             {'workers': workers}
+#         )
 
 #         worker_list = []
 #         for worker in workers:
@@ -39,25 +49,28 @@
 #                 "address": worker.address,
 #             }
 #             worker_list.append(model)
-#         return HttpResponse(json.dumps(worker_list), content_type='application/json')
+#         return HttpResponse(
+#             json.dumps(worker_list),
+#             content_type='application/json'
+#         )
 # # # # # # # # # # end before use rest framework # # # # # #
-
-import json
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import serializers
-from rest_framework import viewsets
+# from rest_framework import viewsets
 
 from .models import Worker
 
+
 class WorkerSerializer(serializers.Serializer):
-     first_name = serializers.CharField()
-     last_name = serializers.CharField()
-     is_available = serializers.BooleanField()
-     primary_phone = serializers.CharField()
-     secondary_phone = serializers.CharField()
-     address = serializers.CharField()
+    first_name = serializers.CharField()
+    last_name = serializers.CharField()
+    is_available = serializers.BooleanField()
+    primary_phone = serializers.CharField()
+    secondary_phone = serializers.CharField()
+    address = serializers.CharField()
+
 
 class WorkerListView(APIView):
     def get(self, request, format=None):
@@ -68,4 +81,3 @@ class WorkerListView(APIView):
 # class WorkerModelViewSet(viewsets.ModelViewSet):
 #      serializer_class = WorkerSerializer
 #      queryset = Worker.objects.all()
-     

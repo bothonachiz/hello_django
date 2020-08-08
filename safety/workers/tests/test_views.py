@@ -1,6 +1,4 @@
-import json
-
-from rest_framework.test import APIClient, APITestCase
+from rest_framework.test import APITestCase
 
 from ..models import Worker
 
@@ -12,13 +10,12 @@ class TestWorkerListView(APITestCase):
         # print(dir(response))
         self.assertEqual(response.status_code, 200)
 
-
     def test_view_Should_render_list_of_worker_name(self):
 
         # # use when want to show all assertionError
         # self.maxDiff = None
 
-        # Given     
+        # Given
         Worker.objects.create(
             first_name='Narongvit',
             last_name='Promkhana',
@@ -42,20 +39,20 @@ class TestWorkerListView(APITestCase):
 
         expected = [
             {
-                "first_name":"Narongvit",
-                "last_name":"Promkhana",
-                "is_available":True,
-                "primary_phone":"087-784-878x",
-                "secondary_phone":"082-524-818x",
-                "address":"Geeky Base All Star",
+                "first_name": "Narongvit",
+                "last_name": "Promkhana",
+                "is_available": True,
+                "primary_phone": "087-784-878x",
+                "secondary_phone": "082-524-818x",
+                "address": "Geeky Base All Star",
             },
             {
-                "first_name":'Bothon',
-                "last_name":"Narongvit",
-                "is_available":True,
-                "primary_phone":"084-874-978x",
-                "secondary_phone":"089-925-848x",
-                "address":"Geeky Base All Star",
+                "first_name": 'Bothon',
+                "last_name": "Narongvit",
+                "is_available": True,
+                "primary_phone": "084-874-978x",
+                "secondary_phone": "089-925-848x",
+                "address": "Geeky Base All Star",
             }
         ]
 

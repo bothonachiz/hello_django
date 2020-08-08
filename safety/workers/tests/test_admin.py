@@ -6,7 +6,7 @@ from ..admin import WorkerAdmin
 
 class TestWorkerAdmin(TestCase):
     def test_admin_should_be_register(self):
-         self.assertTrue(isinstance(admin.site._registry[Worker], WorkerAdmin))
+        self.assertTrue(isinstance(admin.site._registry[Worker], WorkerAdmin))
 
     def test_admin_should_set_list_disaplay(self):
         # Given
@@ -36,4 +36,3 @@ class TestWorkerAdmin(TestCase):
 
         # Then
         self.assertEqual(WorkerAdmin.list_filter, expected)
-        

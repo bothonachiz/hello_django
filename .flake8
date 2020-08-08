@@ -1,7 +1,5 @@
 [flake8]
 exclude =
-    .git,
-    __pycache__,
-    docs/source/conf.py,
+    **/__pycache__/*,
     **/settings/*,
     **/migrations/*

@@ -1,15 +1,16 @@
 from django.test import TestCase
 from ..models import Worker
 
+
 class TestWorker(TestCase):
     def test_worker_shoud_have_defined_fields(self):
         # Given
         first_name = 'Narongvit'
-        last_name='Promkhana'
-        is_available=True
-        primary_phone='087-784-878x'
-        secondary_phone='082-524-818x'
-        address='Geeky Base All Star'
+        last_name = 'Promkhana'
+        is_available = True
+        primary_phone = '087-784-878x'
+        secondary_phone = '082-524-818x'
+        address = 'Geeky Base All Star'
 
         # When
         worker = Worker.objects.create(
