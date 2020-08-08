@@ -57,7 +57,6 @@
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
-# from rest_framework import viewsets
 
 from .models import Worker
 from .serializers import WorkerSerializer
@@ -68,7 +67,3 @@ class WorkerListView(APIView):
         workers = Worker.objects.all()
         serializer = WorkerSerializer(workers, many=True)
         return Response(serializer.data)
-
-# class WorkerModelViewSet(viewsets.ModelViewSet):
-#      serializer_class = WorkerSerializer
-#      queryset = Worker.objects.all()

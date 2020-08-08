@@ -16,6 +16,6 @@ class TestCertificateAdmin(TestCase):
             'name',
             'issue_by',
         )
-
+ 
         # Then
         assert CertificateAdmin.list_display == expected

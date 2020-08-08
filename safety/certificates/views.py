@@ -1,3 +1,9 @@
-from django.shortcuts import render
+from rest_framework.viewsets import ModelViewSet
 
-# Create your views here.
+from .serializers import CertificateModelSerializer
+from .models import Certificate
+
+
+class CertificateModelViewSetView(ModelViewSet):
+    serializer_class = CertificateModelSerializer
+    queryset = Certificate.objects.all()
