@@ -16,12 +16,15 @@ Including another URLconf
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 
-from .views import WorkerListView, WorkerViewSet
+from .views import (
+    WorkerListView, 
+    #WorkerModelViewSet,
+)
 
-router = DefaultRouter()
-router.register('', WorkerViewSet)
+# router = DefaultRouter()
+# router.register('', WorkerModelViewSet)
 
 urlpatterns = [
-    #path('', WorkerListView.as_view()),
-    path('', include(router.urls)),
+    path('', WorkerListView.as_view()),
+    #path('', include(router.urls)),
 ]
