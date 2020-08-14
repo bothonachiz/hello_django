@@ -18,7 +18,9 @@ from django.urls import path  # ,include
 # from rest_framework.routers import DefaultRouter
 
 from .views import (
-    WorkerListView,
+    get_workers,
+    auth_worker,
+    # authenticate_user
     # WorkerModelViewSet,
 )
 
@@ -26,6 +28,7 @@ from .views import (
 # router.register('', WorkerModelViewSet)
 
 urlpatterns = [
-    path('', WorkerListView.as_view()),
+    path('', get_workers),
+    path('auth/', auth_worker),
     # path('', include(router.urls)),
 ]

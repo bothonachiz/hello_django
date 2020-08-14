@@ -1,69 +1,47 @@
-# # # # # # # # # # before use rest framework # # # # # #
-# import json
+import jwt
 
-# from django.views import View
-# from django.http import HttpResponse
-# from django.shortcuts import render
-
-# from .models import Worker
-
-# # class-base view
-
-
-# class WorkerListView(View):
-
-#     def get(self, request):
-
-#         workers = Worker.objects.all()
-
-#         # return sample html
-#         html = ''
-#         for worker in workers:
-#             html += f'<li>{worker.first_name}</li>'
-#         return HttpResponse(html)
-
-#         # rendor html file and passing context
-#         worker_list = []
-#         for worker in workers:
-#             worker_list.append(worker.first_name)
-#         return render(
-#             request,
-#             'worker_list.html',
-#             {'workers': worker_list},
-#         )
-
-#         return render(
-#             request,
-#             'worker_list.html',
-#             {'workers': workers}
-#         )
-
-#         worker_list = []
-#         for worker in workers:
-#             model = {
-#                 "first_name": worker.first_name,
-#                 "last_name": worker.last_name,
-#                 "is_available": worker.is_available,
-#                 "primary_phone": worker.primary_phone,
-#                 "secondary_phone": worker.secondary_phone,
-#                 "address": worker.address,
-#             }
-#             worker_list.append(model)
-#         return HttpResponse(
-#             json.dumps(worker_list),
-#             content_type='application/json'
-#         )
-# # # # # # # # # # end before use rest framework # # # # # #
-
+from django.http import HttpResponseForbidden
+from django.conf import settings
+from django.contrib.auth import authenticate
+from django.contrib.auth.models import User
+from django.contrib.auth.hashers import check_password
+from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import AllowAny
+from rest_framework_jwt.serializers import jwt_payload_handler
+
 
 from .models import Worker
 from .serializers import WorkerSerializer
 
 
-class WorkerListView(APIView):
-    def get(self, request, format=None):
-        workers = Worker.objects.all()
-        serializer = WorkerSerializer(workers, many=True)
-        return Response(serializer.data)
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_workers(request):
+    workers = Worker.objects.all()
+    serializer = WorkerSerializer(workers, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['POST'])
+def auth_worker(request):
+    username = request.data['username']
+    password = request.data['password']
+
+    print(f'username: {username}, password: {password}, ')
+
+    user = authenticate(username=username, password=password)
+
+    if user is not None:
+        payload = jwt_payload_handler(user)
+        token = jwt.encode(payload, settings.SECRET_KEY)
+
+        response_model = {}
+        response_model['token'] = token
+
+        return Response(response_model, status=status.HTTP_200_OK)
+
+    return HttpResponseForbidden()
